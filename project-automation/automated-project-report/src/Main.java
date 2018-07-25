@@ -11,9 +11,9 @@ public class Main {
     static final Path baseFolder = Paths.get(System.getProperty("user.dir"));
 
     public static void main(String[] args) throws IOException {
-        OverwriteTemplates.writeMainPage();
+        OverwriteTemplates.writePage1();
         OverwriteTemplates.writeIntroduction();
-
+        OverwriteTemplates.writeMainPage();
         buildPdf();
     }
 
