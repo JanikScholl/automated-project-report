@@ -11,12 +11,14 @@ class OverwriteTemplates {
         String content = new String(Files.readAllBytes(template));
         content = content.replace("<REPLACE_ME>",
                 "I still think Janik is wonderful.");
-        String replacePath = "figures/daumen.png";
-        content = content.replace("<REPLACE_ME_IMAGE>", replacePath);
+        for(int i=0;i<2;i++) {
 
+            String replacePath = "figures/daumen-"+i+".png";
+            String replaceTarget= "<REPLACE_ME_IMAGE_"+i+">";
+            content = content.replace(replaceTarget, replacePath);
+        }
         Files.write(target, content.getBytes(StandardCharsets.UTF_8));
     }
-
 
     static void writeMainPage() throws IOException {
         Path template = Main.baseFolder.resolve("templates").resolve("main-page.tex");
