@@ -11,14 +11,14 @@ class OverwriteTemplates {
         String content = new String(Files.readAllBytes(template));                          //liest alles aus template?!
         content = content.replace("<REPLACE_ME>",                                           //sucht in content nach <Platzhalter> und ersetzt
                 "I still think Janik is wonderful.");
-        /*for(int i=0;i<2;i++) {                                                              //glaub ich von mir testweise selber erstellt
 
-            String replacePath = "figures/daumen-"+i+".png";
-            String replaceTarget= "<REPLACE_ME_IMAGE_"+i+">";
-            content = content.replace(replaceTarget, replacePath);
-        }*/
+        String replacePath = "figures/daumen-0.png";
+        String replaceTarget= "<REPLACE_ME_IMAGE_0>";
+        content = content.replace(replaceTarget, replacePath);
+
         Files.write(target, content.getBytes(StandardCharsets.UTF_8));                      //schreibt in target den neuen content
     }
+
 
     static void writeMainPage() throws IOException {                                        //selbe prozedur wir in writeIntroduction()
         Path template = Main.baseFolder.resolve("templates").resolve("main-page.tex");
@@ -28,10 +28,10 @@ class OverwriteTemplates {
     }
 
 
-    static void writePage1() throws IOException {
+   /* static void writePage1() throws IOException {
         Path template = Main.baseFolder.resolve("templates").resolve("page1.tex");
         Path target = Main.baseFolder.resolve("page1.tex");
         String content = new String(Files.readAllBytes(template));
         Files.write(target, content.getBytes(StandardCharsets.UTF_8));
-    }
+    }*/
 }
