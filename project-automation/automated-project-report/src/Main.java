@@ -10,25 +10,37 @@ public class Main {
 
     static final Path baseFolder = Paths.get(System.getProperty("user.dir"));
 
+
     public static void main(String[] args) throws IOException {
-       // OverwriteTemplates.writePage1();
-        OverwriteTemplates.writeIntroduction();
+
+        Report report= new Report();
+        OverwriteTemplates overwriteTemplates=new OverwriteTemplates();
+        overwriteTemplates.copyReportData(report);
+
+        //Creates the desired Pages
+        //Todo: create functions for every page
+        if(report.getTitelPage()){OverwriteTemplates.writeTitelPage();};
+        if(report.getQuickInfoPage()){overwriteTemplates.writeQuickInfoPage();};
+        if(report.getManagementSummaryPage()){OverwriteTemplates.writeManagementSummaryPage();};
+
+        //Joins all Pages and Prints the Document
         OverwriteTemplates.writeMainPage();
         buildPdf();
+
     }
 
     private static void buildPdf() throws IOException {
         ProcessBuilder pb = new ProcessBuilder();
         // To use a bibliography the process is: latex -> bibtex -> latex -> latex
-        pb.directory(baseFolder.toFile());
-        pb.command("pdflatex", "main-page.tex");
+        pb.directory(baseFolder.resolve("output").toFile());
+        pb.command("pdflatex", "main-page-out.tex");
         consumeOutput(pb.start());
         consumeOutput(pb.start()); // run it twice for the TOC to be built with correct links
 
         // clean up temporary tex-build-files
-        for (File file : Objects.requireNonNull(baseFolder.toFile().listFiles())) {
+        for (File file : Objects.requireNonNull(baseFolder.resolve("output").toFile().listFiles())) {
             if (file.getName().endsWith(".aux") || file.getName().endsWith(".toc")
-                    || file.getName().endsWith(".log") || file.getName().endsWith(".blg")) {
+                    || file.getName().endsWith(".log") || file.getName().endsWith(".blg") || file.getName().endsWith("-out.tex")) {
                 file.delete();
             }
         }
@@ -46,4 +58,6 @@ public class Main {
             System.err.println(s);
         }
     }
+
+
 }
