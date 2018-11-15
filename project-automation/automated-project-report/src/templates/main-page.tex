@@ -1,39 +1,168 @@
-\documentclass{article}
-\usepackage[paperwidth=5.08in,paperheight=3.78in]{geometry}
-\usepackage{authblk}
-\usepackage{times,url}         % allows index generation
-\usepackage{graphicx}          % standard LaTeX graphics tool
-\usepackage{subcaption}        % when including figure files
-\usepackage{multicol}          % used for the two-column index
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{booktabs}
-\usepackage{epstopdf}
-\usepackage{paralist}
-\usepackage{xcolor}
+\documentclass[paper=128mm:96mm, fontsize=8pt,pagesize, parskip=half-,
+]{scrartcl}
+
+\linespread{1.12}
+
+\usepackage[includeheadfoot,top=5.5mm,bottom=3.5mm,left=3.5mm,right=5.5mm,
+headsep=6.5mm,footskip=8.5mm]{geometry}
+
+\usepackage{eso-pic} 		% backroundpics
+\usepackage{amsthm} 		% Required for theorem environments
+\usepackage{bm} 			% Required for bold math symbols (used in the footer)
+\usepackage{graphicx} % Required for including images in figures
+\usepackage{tikz} 		% Required for colored boxes
+\usepackage{booktabs} % Required for horizontal rules in tables
+\usepackage{multicol} % Required for creating multiple columns in slides
+\usepackage{lastpage} % For printing the total number of pages
+\usepackage{microtype} % Better typography
+\usepackage{tocstyle} % Required for customizing the table of contents
+\usepackage[ansinew]{inputenc}
 \usepackage[ngerman]{babel}
-\usepackage{eso-pic}
+\usepackage[T1]{fontenc} % Used for the two columns
+\usepackage{xcolor}	 	% more colors
+\definecolor{accurateOrange}{RGB}{255,73,0}
+\definecolor{accurateGrau}{RGB}{110,104,93}
 
-\newcommand\BackgroundPic{
-\put(0,0){
-\parbox[b][\paperheight]{\paperwidth}{%
-\vfill
-\centering
-\includegraphics[width=\paperwidth,height=\paperheight,
-keepaspectratio]{header.png}%
-\vfill
-}}}
-%\AddToShipoutPicture* { \put(0,0){\includegraphics{./figures/titelbackround.png}} }
+% Set space between two columns
+\usepackage{multicol}
+\setlength{\columnsep}{5mm}
+\setlength\emergencystretch{1em}
 
-%Make sure your document compile using pdflatex
+\usepackage{scrpage2} % Required for customization of the header and footer
+\pagestyle{scrheadings} % Activates the pagestyle from scrpage2 for custom headers and footers
+\clearscrheadfoot % Remove the default header and footer
+\setkomafont{pageheadfoot}{\normalfont\color{black}\sffamily} % Font settings for the header and footer
+
+% Sets vertical centering of slide contents with increased space between paragraphs/lists
+\makeatletter
+\renewcommand*{\@textbottom}{\vskip \z@ \@plus 1fil}
+\newcommand*{\@texttop}{\vskip \z@ \@plus .5fil}
+\addtolength{\parskip}{\z@\@plus .25fil}
+\makeatother
+
+% Remove page numbers and the dots leading to them from the outline slide
+\makeatletter
+\newtocstyle[noonewithdot]{nodotnopagenumber}{\settocfeature{pagenumberbox}{\@gobble}}
+\makeatother
+\usetocstyle{nodotnopagenumber}
+
+%------------------------------------------------
+% Header and Footer configuration
+
+\setlength{\footheight}{8mm} % Height of the footer
+\addtokomafont{pagefoot}{\footnotesize} % Small font size for the footnote
+% Balken
+\cfoot{
+\hspace{-2mm}
+\begin{tikzpicture}[remember picture,overlay]
+    \node [xshift=\paperwidth/2,yshift=\footheight] at (current page.south west)[rectangle,fill,inner sep=0pt,minimum width=\paperwidth,minimum height=3pt,top color=accurateOrange,bottom color=accurateOrange]{};
+\end{tikzpicture}}
+% Auftrag
+% Seitenzahl und Autor
+\ifoot[\pagemark/\pageref{LastPage}\hspace{-2mm}]{\pagemark/\pageref{LastPage}\hspace{-2mm}
+\qquad \myauthor \qquad \myjob}
+%------------------------------------------------
+
+% Overwriting section
+\renewcommand{\section}[1]{\clearpage\thispagestyle{empty}
+\AddToShipoutPicture*{\AtTextUpperLeft{\put(-19,-150){
+\includegraphics[width=1.2\paperwidth]{backround.png}}}}
+\begin{minipage}[b][100pt]{1\textwidth}
+    \begin{flushright}
+        \colorbox{accurateOrange}{\color{white}\begin{huge} #1
+        \end{huge}}\smallskip\end{flushright}\end{minipage}\clearpage
+\ihead{}}
+
+\renewcommand{\subsection}[1]{\clearpage\ihead{\begin{huge}#1 \end{huge}}}
+\renewcommand{\subsubsection}[1]{\bigskip\begin{large}\color{accurateOrange}#1 \end{large}}
+
+
+\usepackage{microtype}
+\usepackage[default]{lato}
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\myauthor}{accu:rate - Institute for crowd simulation}
+\newcommand*{\mydate}{\today}
+\newcommand*{\myjob}{Musterauftrag}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-    \AddToShipoutPicture*{\BackgroundPic}
 
-\include{titelPage-out}
-\tableofcontents
-\include{quickInfoPage-out}
-\include{managementSummaryPage-out}
-\include{titelPage-out}
+    %-----------Titlepage------------------------------------------------------
+    \thispagestyle{empty}
 
+    % Backroundpictures
+    \AddToShipoutPicture*{\AtTextUpperLeft{\put(-19,-150){
+    \includegraphics[width=1.2\paperwidth]{title-backround.png}}}}
+    \AddToShipoutPicture*{\AtTextUpperLeft{\put(10,-210){
+    \includegraphics[width=0.4\textwidth]{accurate-logo_sRGB.png}}}}
+
+    % Information:
+    \begin{minipage}[b][130pt]{1\textwidth}
+        \begin{flushright}
+            \colorbox{accurateOrange}{\color{white}\begin{huge}
+                                                       Ergebnisse Entfluchtungssimulation
+            \end{huge}}\smallskip
+
+            \colorbox{accurateOrange}{\color{white}\begin{huge}
+                                                       f\"ur  ...
+            \end{huge}}\smallskip
+
+            \color{white} M"unchen den \today
+        \end{flushright}
+    \end{minipage}
+
+    %----------------------------------------------------------------------
+    \clearpage
+    \AddToShipoutPicture{\AtTextUpperLeft{\put(275,15){
+    \includegraphics[width=0.2\textwidth]{accurate-logo_sRGB.png}}}}
+    \AddToShipoutPicture{\AtTextUpperLeft{\put(-19,42){
+    \includegraphics[width=1.2\paperwidth]{header.png}}}}
+
+    Auftraggeber:
+
+    \begin{small}
+        \qquad Herr Max Mustermann
+
+        \qquad Musterstr. 2
+
+        \qquad 00000 Musterstadt
+    \end{small}
+
+    Autrag:
+
+    \begin{small}
+        \qquad Musterauftrag
+    \end{small}
+
+    Verfasser:
+
+    \begin{small}
+        \qquad Dr. Angelika Kneidl, accu:rate GmbH, Rosental 5, 80331 M\"unchen
+    \end{small}
+
+    Datum:
+
+    \begin{small}
+        \qquad \today
+    \end{small}
+
+    %---------------------Include-Dateien----------------------------------
+    \clearpage
+    \twocolumn
+
+    \include{managementsummary}
+    \include{auftragsbeschreibung}
+    \include{simulationsszenario}
+    \include{ergebnisse}
+    \include{zusammenfassung}
+
+    %----------------------Referenzen--------------------------------------
+    \clearpage
+    \section{Referenzen}
+    \renewcommand{\section}[1]{\ihead{}}
+
+    \bibliographystyle{plain}
+    \bibliography{tgfbibs}
 
 \end{document}
