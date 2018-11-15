@@ -1,4 +1,5 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass{article}
+\usepackage[paperwidth=5.08in,paperheight=3.78in]{geometry}
 \usepackage{authblk}
 \usepackage{times,url}         % allows index generation
 \usepackage{graphicx}          % standard LaTeX graphics tool
@@ -13,15 +14,13 @@
 \usepackage[ngerman]{babel}
 \usepackage{eso-pic}
 
-\usepackage{mdframed}
-
 \newcommand\BackgroundPic{
 \put(0,0){
 \parbox[b][\paperheight]{\paperwidth}{%
 \vfill
 \centering
 \includegraphics[width=\paperwidth,height=\paperheight,
-keepaspectratio]{background.png}%
+keepaspectratio]{header.png}%
 \vfill
 }}}
 %\AddToShipoutPicture* { \put(0,0){\includegraphics{./figures/titelbackround.png}} }
