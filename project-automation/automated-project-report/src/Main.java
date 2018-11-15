@@ -14,13 +14,11 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         Report report= new Report();
-        OverwriteTemplates overwriteTemplates=new OverwriteTemplates();
-        overwriteTemplates.copyReportData(report);
 
         //Creates the desired Pages
         //Todo: create functions for every page
         if(report.getTitelPage()){OverwriteTemplates.writeTitelPage();};
-        if(report.getQuickInfoPage()){overwriteTemplates.writeQuickInfoPage();};
+        if(report.getQuickInfoPage()){OverwriteTemplates.writeQuickInfoPage();};
         if(report.getManagementSummaryPage()){OverwriteTemplates.writeManagementSummaryPage();};
 
         //Joins all Pages and Prints the Document

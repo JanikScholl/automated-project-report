@@ -12,18 +12,29 @@
 \usepackage{xcolor}
 \usepackage[ngerman]{babel}
 \usepackage{eso-pic}
-\usepackage{graphicx}
-\AddToShipoutPicture* {%
-\put(0,0){\includegraphics{./figures/titelbackround.png}}%
-}-
 
+\usepackage{mdframed}
+
+\newcommand\BackgroundPic{
+\put(0,0){
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+\centering
+\includegraphics[width=\paperwidth,height=\paperheight,
+keepaspectratio]{background.png}%
+\vfill
+}}}
+%\AddToShipoutPicture* { \put(0,0){\includegraphics{./figures/titelbackround.png}} }
 
 %Make sure your document compile using pdflatex
 \begin{document}
+    \AddToShipoutPicture*{\BackgroundPic}
 
+\include{titelPage-out}
 \tableofcontents
+\include{quickInfoPage-out}
+\include{managementSummaryPage-out}
+\include{titelPage-out}
 
-\include{introduction}
-\include{page1}
 
 \end{document}

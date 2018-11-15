@@ -5,33 +5,42 @@ import java.nio.file.Path;
 
 class OverwriteTemplates {
 
-    static void writeIntroduction() throws IOException {
-        Path template = Main.baseFolder.resolve("templates").resolve("introduction.tex");   //template enthält den den path zu introduction.tex
-        Path target = Main.baseFolder.resolve("introduction.tex");                          //target  enthält den path zum neuen introduction.tex
-        String content = new String(Files.readAllBytes(template));                          //liest alles aus template?!
-        content = content.replace("<REPLACE_ME>",                                           //sucht in content nach <Platzhalter> und ersetzt
-                "I still think Janik is wonderful.");
+    //private Report report;
 
-        String replacePath = "figures/daumen-0.png";
-        String replaceTarget= "<REPLACE_ME_IMAGE_0>";
-        content = content.replace(replaceTarget, replacePath);
-
-        Files.write(target, content.getBytes(StandardCharsets.UTF_8));                      //schreibt in target den neuen content
+    static void writeTitelPage() throws IOException {                                        //selbe prozedur wir in writeIntroduction()
+        Path template = Main.baseFolder.resolve("templates").resolve("titelPage.tex");
+        Path target = Main.baseFolder.resolve("output").resolve("titelPage-out.tex");
+        String content = new String(Files.readAllBytes(template));
+        Files.write(target, content.getBytes(StandardCharsets.UTF_8));
     }
 
+    static void writeManagementSummaryPage() throws IOException {                                        //selbe prozedur wir in writeIntroduction()
+        Path template = Main.baseFolder.resolve("templates").resolve("managementSummaryPage.tex");
+        Path target = Main.baseFolder.resolve("output").resolve("managementSummaryPage-out.tex");
+        String content = new String(Files.readAllBytes(template));
+        Files.write(target, content.getBytes(StandardCharsets.UTF_8));
+    }
 
-    static void writeMainPage() throws IOException {                                        //selbe prozedur wir in writeIntroduction()
+    //Todo: find a way to insert date. Static Overwrite class prevents the dynamic use of
+    //Todo: getDateInfo(), creating an overwrite instance in main and copying the Report Value into it solves the problem
+    //Todo: but seems to be not the moste elegant way. This is for copyReportData() aswell as writeQuickInfoPage().
+
+    //public void copyReportData(Report report){ this.report=report;}
+
+    static void writeQuickInfoPage() throws IOException {
+        Path template = Main.baseFolder.resolve("templates").resolve("quickInfoPage.tex");
+        Path target = Main.baseFolder.resolve("output").resolve("quickInfoPage-out.tex");
+        String content = new String(Files.readAllBytes(template));
+        content = content.replace("<test>","erfolg");
+        Files.write(target, content.getBytes(StandardCharsets.UTF_8));
+    }
+
+    static void writeMainPage() throws IOException {
         Path template = Main.baseFolder.resolve("templates").resolve("main-page.tex");
-        Path target = Main.baseFolder.resolve("main-page.tex");
+        Path target = Main.baseFolder.resolve("output").resolve("main-page-out.tex");
         String content = new String(Files.readAllBytes(template));
         Files.write(target, content.getBytes(StandardCharsets.UTF_8));
     }
 
 
-   /* static void writePage1() throws IOException {
-        Path template = Main.baseFolder.resolve("templates").resolve("page1.tex");
-        Path target = Main.baseFolder.resolve("page1.tex");
-        String content = new String(Files.readAllBytes(template));
-        Files.write(target, content.getBytes(StandardCharsets.UTF_8));
-    }*/
 }
